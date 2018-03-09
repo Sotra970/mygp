@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">mygp</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign up</string>
+    <string name="not_registered">Not registered?</string>
+    <string name="create_acc">&#032;create account</string>
+    <string name="username">Username</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="already_registered">Already registered?</string>
+    <string name="sign_in">&#032;login</string>
+    <string name="searc_hint">search.........</string>
+    <string name="oct_desc">October 6 University is committed to provide graduates with the necessary efficiency and skills that cater for the requirements of job market .</string>
+</resources>

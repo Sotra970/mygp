@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:elevation="2dp"
+    android:layout_margin="6dp"
+    android:background="@drawable/white_circle"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="4dp"
+    >
+
+    <ImageView
+        android:src="@drawable/oct6_logo"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:id="@+id/image"/>
+
+</LinearLayout>
