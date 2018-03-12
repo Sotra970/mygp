@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimaryDark">@color/black</color>
-    <color name="colorPrimary">#13a752</color>
-    <color name="colorAccent">#2ecc71</color>
+    <color name="colorPrimary">@color/amber_700</color>
+    <!--<color name="colorPrimary">#0fc45a</color>-->
+    <!--<color name="colorPrimaryDark2">#16944c</color>-->
+    <color name="colorPrimaryDark2">@color/amber_900</color>
+    <!--<color name="colorAccent">#2ecc71</color>-->
+    <color name="colorAccent">@color/amber_A700</color>
 
 
     <color name="red_50">#FFEBEE</color>
@@ -281,5 +285,9 @@
 
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+
+    <color name="transparent_grey_200_light">#edeeeeee</color>
+
+
 
 </resources>

@@ -50,7 +50,7 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyVH>{
 
     View getMajorView(String major){
         View v = LayoutInflater.from(context)
-                .inflate(R.layout.major_item, null, false);
+                .inflate(R.layout.major_item2, null, false);
         MajorVH vh = new MajorVH(v) ;
         vh.title.setText(major);
         return vh.itemView ;

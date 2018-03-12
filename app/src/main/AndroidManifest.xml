@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:name=".AppController"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppThemeDark">
         <activity android:name=".Activity.SpalshActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,7 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.HomepageActivity" />
+        <activity
+            android:theme="@style/AppTheme.Base"
+            android:name=".Activity.HomepageActivity" />
         <activity android:name=".Activity.SignupActivity" />
         <activity android:name=".Activity.LoginActivity" />
         <activity android:name=".Activity.DetailsActivity" />
