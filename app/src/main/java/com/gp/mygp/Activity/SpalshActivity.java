@@ -28,6 +28,7 @@ public class SpalshActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             startActivity(new Intent(getApplicationContext(), HomepageActivity.class));
+                            finish();
                         }
                     }, 3000L
             );
@@ -36,6 +37,7 @@ public class SpalshActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     startActivity(new Intent(getApplicationContext() , LoginActivity.class));
+                    finish();
                 }
             }, 3000L);
         }

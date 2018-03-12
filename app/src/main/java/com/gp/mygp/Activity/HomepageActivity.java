@@ -66,7 +66,7 @@ public class HomepageActivity extends BaseActivity
         closeButton.setColorFilter(
                 ResourcesCompat.getColor(
                         getResources(),
-                        R.color.white,
+                        R.color.grey_900,
                         null
                 ),
                 PorterDuff.Mode.SRC_IN
@@ -76,7 +76,7 @@ public class HomepageActivity extends BaseActivity
         et.setTextColor(
                 ResourcesCompat.getColor(
                         getResources(),
-                        R.color.white,
+                        R.color.grey_900,
                         null
                 )
         );

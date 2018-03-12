@@ -36,7 +36,7 @@ public class UniversityInfoItem {
         return facultyItems;
     }
 
-    public String getLogo() {
+    public String  getLogo() {
         return logo;
     }
 

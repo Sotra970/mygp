@@ -57,6 +57,6 @@ public interface ApiInterface {
 
     @GET("api/search/{name}")
     Call<ArrayList<UniversityInfoItem>> search(
-            @Query("name") String query
+            @Path("name") String query
     );
 }

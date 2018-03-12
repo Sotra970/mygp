@@ -50,9 +50,8 @@ public class HomepageFragment extends BaseFragment implements InfoItemClickListe
     RecyclerView infoRecycler;
     @BindView(R.id.slider)
     SmoothViewPager slider;
-    /*@Nullable
-    @BindView(R.id.no_data)*/
-    View noData;
+    @BindView(R.id.slider_layout)
+    View sliderLayout;
     @BindView(R.id.indicator)
     PageIndicatorView indicator;
     private SliderAdapter sliderAdapter;
@@ -212,7 +211,7 @@ public class HomepageFragment extends BaseFragment implements InfoItemClickListe
         ) {
             @Override
             public void onResponse(@NonNull Call<ArrayList<UniversityInfoItem>> call, @NonNull Response<ArrayList<UniversityInfoItem>> response) {
-                slider.setVisibility(View.GONE);
+                sliderLayout.setVisibility(View.GONE);
                 if(response.isSuccessful()){
                     searchRes = response.body();
                     if(infoAdapter != null){
@@ -221,7 +220,7 @@ public class HomepageFragment extends BaseFragment implements InfoItemClickListe
                     if(thumbnailAdapter != null){
                         thumbnailAdapter.update(null);
                     }
-                    showEmpty(false);
+                    showNoData(false);
                 }else{
                     if(response.code() == 404){
                         // not found
@@ -232,7 +231,7 @@ public class HomepageFragment extends BaseFragment implements InfoItemClickListe
                             thumbnailAdapter.update(null);
                         }
                     }
-                    showEmpty(true);
+                    showNoData(true);
                 }
                 showProgress(false);
             }
@@ -240,19 +239,13 @@ public class HomepageFragment extends BaseFragment implements InfoItemClickListe
     }
 
     public void clearSearch() {
-        showEmpty(false);
-        slider.setVisibility(View.VISIBLE);
+        showNoData(false);
+        sliderLayout.setVisibility(View.VISIBLE);
         if(infoAdapter != null){
             infoAdapter.update(allData);
         }
         if(thumbnailAdapter != null){
             thumbnailAdapter.update(allData);
-        }
-    }
-
-    private void showEmpty(boolean show){
-        if(noData != null){
-            noData.setVisibility(show ? View.VISIBLE : View.GONE);
         }
     }
 }

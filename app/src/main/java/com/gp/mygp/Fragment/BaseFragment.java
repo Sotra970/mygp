@@ -41,4 +41,12 @@ public class BaseFragment extends Fragment {
         }
     }
 
+    protected void showNoData(boolean show){
+        try {
+            ((BaseActivity) getActivity()).showNoData(show);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 }
