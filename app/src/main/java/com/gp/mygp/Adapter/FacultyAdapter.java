@@ -40,7 +40,7 @@ public class FacultyAdapter extends RecyclerView.Adapter<FacultyVH>{
         /*holder.title.setText(facultyItem.getTitle());
         holder.cost.setText(facultyItem.getCost() + "");
         holder.grade.setText(facultyItem.getGrade() + "");*/
-        ArrayList<String> dep = facultyItem.getDeparts();
+        ArrayList<String> dep = facultyItem.getMajors();
         if(dep != null && !dep.isEmpty()){
             for(String s : dep){
                 holder.flowLayout.addView(getMajorView(s));

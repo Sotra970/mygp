@@ -6,6 +6,7 @@ package com.gp.mygp.Service;
 
 public class Config {
     public static String BASE_URL = "http://bandoraa.net/unigp/public/index.php/" ;
+    public static String BASE_IMAGE_URL = "http://bandoraa.net/upload";
 
     final public static int MY_PERMISSIONS_REQUEST_STORAGE = 262;
     final  public static int MY_PERMISSIONS_REQUEST_CAMERA  = 263;

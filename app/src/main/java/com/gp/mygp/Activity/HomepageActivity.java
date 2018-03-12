@@ -37,7 +37,7 @@ import butterknife.ButterKnife;
  * Created by Ahmed Naeem on 2/25/2018.
  */
 
-public class HomepageActivity extends AppCompatActivity
+public class HomepageActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
     @BindView(R.id.toolbar)

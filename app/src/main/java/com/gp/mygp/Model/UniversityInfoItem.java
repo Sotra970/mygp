@@ -1,5 +1,7 @@
 package com.gp.mygp.Model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 /**
@@ -8,22 +10,30 @@ import java.util.ArrayList;
 
 public class UniversityInfoItem {
 
+    @SerializedName("id")
+    private int id;
+    @SerializedName("logo")
     private String logo;
+    @SerializedName("name")
     private String title;
+    @SerializedName("rate")
     private int rate;
+    @SerializedName("cover")
     private String cover;
+    @SerializedName("desc")
     private String desc;
-    private ArrayList<String> majors;
+    @SerializedName("facs")
+    private ArrayList<FacultyItem> facultyItems;
+    @SerializedName("min_grade")
     private int minPerc;
+    @SerializedName("email")
+    private String email;
+    @SerializedName("phone")
+    private String phone;
 
-    public UniversityInfoItem(String logo, String title, int rate, String cover, String desc, ArrayList<String> majors, int minPerc) {
-        this.logo = logo;
-        this.title = title;
-        this.rate = rate;
-        this.cover = cover;
-        this.desc = desc;
-        this.majors = majors;
-        this.minPerc = minPerc;
+
+    public ArrayList<FacultyItem> getFacultyItems() {
+        return facultyItems;
     }
 
     public String getLogo() {
@@ -46,8 +56,16 @@ public class UniversityInfoItem {
         return desc;
     }
 
-    public ArrayList<String> getMajors() {
-        return majors;
+    public int getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhone() {
+        return phone;
     }
 
     public int getMinPerc() {

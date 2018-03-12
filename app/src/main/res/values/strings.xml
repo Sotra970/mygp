@@ -60,4 +60,6 @@
     <string name="grade">grade</string>
     <string name="grade_error">Enter valid grade</string>
     <string name="sign_out">Logout</string>
+    <string name="from">From</string>
+    <string name="no_data">No data</string>
 </resources>

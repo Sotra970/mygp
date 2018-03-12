@@ -74,9 +74,9 @@ public class ApplicationsFragment extends BaseFragment
 
     @Override
     public void onApplicationClicked(ApplicationItem applicationItem) {
-        int uni = applicationItem.getUniversityId();
+        /*int uni = applicationItem.getUniversityId();
         DetailsActivity.setUniversityId(uni);
         Intent i = new Intent(getContext(), DetailsActivity.class);
-        startActivity(i);
+        startActivity(i);*/
     }
 }

@@ -19,12 +19,14 @@ public class PagerSwitcher {
 
     private Timer timer;
     private int page = 0;
+    private int max;
 
     private boolean run = false;
 
-    public PagerSwitcher(Context context, ViewPager viewPager) {
+    public PagerSwitcher(Context context, ViewPager viewPager, int max) {
         this.context = context;
         this.viewPager = viewPager;
+        this.max = 2;
     }
 
     public void startSwitching(){
@@ -40,8 +42,10 @@ public class PagerSwitcher {
 
     private class RemindTask extends TimerTask {
 
+
         @Override
         public void run() {
+
 
             // As the TimerTask run on a seprate thread from UI thread we have
             // to call runOnUiThread to do work on UI thread.
@@ -51,7 +55,7 @@ public class PagerSwitcher {
                         new Runnable() {
                             @Override
                             public void run() {
-                                if (page >= 4) { // In my case the number of pages are 5
+                                if (page >= max) {
                                     page = 0;
                                     viewPager.setCurrentItem(page, true);
                                 }

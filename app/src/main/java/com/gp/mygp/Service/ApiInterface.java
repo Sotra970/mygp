@@ -14,7 +14,10 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by Ahmed on 8/29/2017.
@@ -26,10 +29,10 @@ public interface ApiInterface {
     @POST("")
     Call<ArrayList<ApplicationItem>> getApplications(@Field("id") int userId);
 
-    @POST("")
+    @GET("api/unis")
     Call<ArrayList<UniversityInfoItem>> getUnis();
 
-    @POST("")
+    @GET("api/slider")
     Call<ArrayList<SliderItem>> getSliders();
 
     @POST("")
@@ -52,8 +55,8 @@ public interface ApiInterface {
             @Body UserItem userModel
     );
 
-    @POST("")
+    @GET("api/search/{name}")
     Call<ArrayList<UniversityInfoItem>> search(
-            @Field("query") String query
+            @Query("name") String query
     );
 }

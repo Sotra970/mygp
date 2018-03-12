@@ -22,7 +22,7 @@ public class FacultyVH extends RecyclerView.ViewHolder{
     public TextView cost;
     @BindView(R.id.grade)
     public TextView grade;
-    @BindView(R.id.departs)
+    @BindView(R.id.majors)
     public FlowLayout flowLayout;
 
     public FacultyVH(View itemView) {
