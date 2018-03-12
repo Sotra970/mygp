@@ -64,14 +64,16 @@ public class LoginActivity extends BaseActivity {
         showProgress(true);
         String usernameS;
         String passwordS;
+        String tokenS;
         try {
             usernameS = username.getText().toString();
             passwordS = password.getText().toString();
+            tokenS = "TEMP";
         }catch (Exception e){
             Log.e("login", e.getMessage() + "");
             return;
         }
-        Call<UserItem> call = Injector.Api().login(usernameS, passwordS);
+        Call<UserItem> call = Injector.Api().login(usernameS, passwordS, tokenS);
         call.enqueue(new CallbackWithRetry<UserItem>(
                 call,
                 new onRequestFailure() {

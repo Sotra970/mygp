@@ -57,4 +57,7 @@
     <string name="password_not_match">Passwords do not match</string>
     <string name="select_doc">Please upload your documents</string>
     <string name="account_created">Account created</string>
+    <string name="grade">grade</string>
+    <string name="grade_error">Enter valid grade</string>
+    <string name="sign_out">Logout</string>
 </resources>

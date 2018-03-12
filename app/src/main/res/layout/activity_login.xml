@@ -30,7 +30,7 @@
             android:textColorHint="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/username">
+            android:id="@+id/username_layout">
 
             <EditText
                 android:hint="@string/username"
@@ -42,7 +42,7 @@
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:textColor="@color/white"
-                android:id="@+id/username_layout"/>
+                android:id="@+id/username"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout

@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SearchView;
 
+import com.gp.mygp.AppController;
 import com.gp.mygp.Fragment.AboutFragment;
 import com.gp.mygp.Fragment.ApplicationsFragment;
 import com.gp.mygp.Fragment.ContactFragment;
@@ -212,6 +213,9 @@ public class HomepageActivity extends AppCompatActivity
                 break;
             case R.id.nav_home:
                 fragment = HomepageFragment.getInstance();
+                break;
+            case R.id.nav_sign:
+                AppController.getInstance().getPrefManager().clear(true);
                 break;
         }
 

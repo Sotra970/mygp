@@ -79,6 +79,28 @@
 
         </android.support.design.widget.TextInputLayout>
 
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/grade_layout"
+            android:textColorHint="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/grade"
+                android:hint="@string/grade"
+                android:drawablePadding="4dp"
+                android:drawableStart="@drawable/ic_person_white_18dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
+                android:inputType="numberDecimal"
+                android:maxLines="1"
+                android:textColor="#fff"
+                />
+
+
+        </android.support.design.widget.TextInputLayout>
+
 
 
         <android.support.design.widget.TextInputLayout

@@ -19,6 +19,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.gp.mygp.Service.Config.BASE_URL;
 import static okhttp3.logging.HttpLoggingInterceptor.Level.BODY;
 
 /**
@@ -27,9 +28,8 @@ import static okhttp3.logging.HttpLoggingInterceptor.Level.BODY;
 public class Injector
 {
     private static final String CACHE_CONTROL = "Cache-Control";
-    private static final String BASE_URL = "";
-    public  static  int Retry_count = 3 ;
-    public  static  int Retry_Time_Offset = 10000 ;
+    public  static  int Retry_count = 3;
+    public  static  int Retry_Time_Offset = 10000;
 
     private final static int UPLOAD_CONNECT_TIME_OUT = 0;
 
@@ -68,6 +68,13 @@ public class Injector
     {
         return new OkHttpClient.Builder()
                 .addInterceptor( provideHttpLoggingInterceptor() )
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+                        Request request = chain.request().newBuilder().addHeader("User-Agent", "android").build();
+                        return chain.proceed(request);
+                    }
+                })
                 .connectTimeout(Retry_Time_Offset, TimeUnit.MILLISECONDS)
                 .writeTimeout(Retry_Time_Offset, TimeUnit.MILLISECONDS)
                 .readTimeout(Retry_Time_Offset, TimeUnit.MILLISECONDS)

@@ -52,6 +52,10 @@ public class SignupActivity extends UplodFileActivity {
     EditText phone;
     @BindView(R.id.phone_layout)
     TextInputLayout phone_layout;
+    @BindView(R.id.grade)
+    EditText grade;
+    @BindView(R.id.grade_layout)
+    TextInputLayout grade_layout;
     @BindView(R.id.password)
     EditText password;
     @BindView(R.id.password_layout)
@@ -65,7 +69,7 @@ public class SignupActivity extends UplodFileActivity {
     @BindView(R.id.attach_text)
     TextView attachText;
 
-    private String uploadedFile;
+    private String uploadedFile = "temp.pdf";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,16 +92,18 @@ public class SignupActivity extends UplodFileActivity {
         String emailS;
         String passwordS;
         String phoneS;
+        double gradeS;
         try {
             usernameS = username.getText().toString();
             emailS = email.getText().toString();
             phoneS = phone.getText().toString();
             passwordS = password.getText().toString();
+            gradeS = Double.parseDouble(grade.getText().toString());
         }catch (Exception e){
             Log.e("sign_up", e.getMessage() + "");
             return;
         }
-        UserItem userItem = new UserItem(-1, usernameS, passwordS, emailS, phoneS, uploadedFile);
+        UserItem userItem = new UserItem(-1, usernameS, passwordS, emailS, phoneS, uploadedFile, gradeS);
         Call<UserItem> call = Injector.Api().register(userItem);
         call.enqueue(new CallbackWithRetry<UserItem>(
                 call,
@@ -151,9 +157,11 @@ public class SignupActivity extends UplodFileActivity {
                 !Validation.isEditTextEmpty(password, password_layout) &&
                 !Validation.isEditTextEmpty(confirm_password, confirm_password_layout) &&
                 Validation.isEmailValid(email, email_layout) &&
-                Validation.validatePhone(phone, phone_layout) &&
-                Validation.isPasswordsTheSame(password, confirm_password_layout, confirm_password);
-        if(b){
+                //Validation.validatePhone(phone, phone_layout) &&
+                Validation.isPasswordsTheSame(password, confirm_password_layout, confirm_password) &&
+                Validation.isGradeValid(grade, grade_layout);
+        return true;
+        /*if(b){
             if(uploadedFile == null){
                 Toast.makeText(this, R.string.select_doc, Toast.LENGTH_SHORT).show();
                 return false;
@@ -162,7 +170,7 @@ public class SignupActivity extends UplodFileActivity {
             }
         }else{
             return false;
-        }
+        }*/
     }
 
 

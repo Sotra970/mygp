@@ -1,25 +1,40 @@
 package com.gp.mygp.Model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Ahmed Naeem on 3/12/2018.
  */
 
 public class UserItem {
 
+    @SerializedName("id")
     private int id;
+    @SerializedName("name")
     private String username;
+    @SerializedName("password")
     private String password;
+    @SerializedName("email")
     private String email;
+    @SerializedName("phone")
     private String phone;
+    @SerializedName("doc_name")
     private String docUrl;
+    @SerializedName("grade")
+    private double grade;
 
-    public UserItem(int id, String username, String password, String email, String phone, String docUrl) {
+    public UserItem(int id, String username, String password, String email, String phone, String docUrl, double grade) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.phone = phone;
         this.docUrl = docUrl;
+        this.grade = grade;
+    }
+
+    public double getGrade() {
+        return grade;
     }
 
     public UserItem() {

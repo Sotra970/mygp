@@ -5,9 +5,7 @@ package com.gp.mygp.Service;
  */
 
 public class Config {
-    final public static String temp_url = "https://firebasestorage.googleapis.com/v0/b/ezzayaroh-3fd68.appspot.com/o/images%2Ftemp.jpg?alt=media&token=f1c2c285-aca3-4302-9871-05c5ee2418c6";
-    public static String BASE_URL = "http://197.44.62.106/" ;
-    public static String Image_URL = BASE_URL+"B2B/upload/dump/" ;
+    public static String BASE_URL = "http://bandoraa.net/unigp/public/index.php/" ;
 
     final public static int MY_PERMISSIONS_REQUEST_STORAGE = 262;
     final  public static int MY_PERMISSIONS_REQUEST_CAMERA  = 263;

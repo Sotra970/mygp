@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.gp.mygp.AppController;
 import com.gp.mygp.R;
 
 /**
@@ -21,11 +22,22 @@ public class SpalshActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         Handler ui = new Handler(Looper.getMainLooper());
-        ui.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startActivity(new Intent(getApplicationContext() , LoginActivity.class));
-            }
-        }, 3000L);
+        if(AppController.getInstance().isUserSigned()){
+            ui.postDelayed(
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            startActivity(new Intent(getApplicationContext(), HomepageActivity.class));
+                        }
+                    }, 3000L
+            );
+        }else{
+            ui.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(new Intent(getApplicationContext() , LoginActivity.class));
+                }
+            }, 3000L);
+        }
     }
 }

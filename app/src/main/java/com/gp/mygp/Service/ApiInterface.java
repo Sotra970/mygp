@@ -40,13 +40,14 @@ public interface ApiInterface {
     Call<ArrayList<NotificationItem>> getNotifs(@Field("id") int userId);
 
     @FormUrlEncoded
-    @POST("")
+    @POST("api/login")
     Call<UserItem> login(
             @Field("username") String username ,
-            @Field("password") String password
+            @Field("password") String password,
+            @Field("token") String token
     );
 
-    @POST("")
+    @POST("api/regitser")
     Call<UserItem> register(
             @Body UserItem userModel
     );

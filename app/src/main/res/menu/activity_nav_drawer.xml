@@ -28,6 +28,11 @@
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_supervisor_account_black_24dp"
             android:title="@string/about" />
+
+        <item
+            android:id="@+id/nav_sign"
+            android:icon="@drawable/ic_supervisor_account_black_24dp"
+            android:title="@string/sign_out" />
     </group>
 
 

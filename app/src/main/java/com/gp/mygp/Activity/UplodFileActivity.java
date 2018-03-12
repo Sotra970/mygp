@@ -118,6 +118,8 @@ public class UplodFileActivity extends LoadingDialogActivity {
 
     int current_body = 1   ;
     private void upload_Files(final ArrayList<File> files_2_upload , final boolean single) {
+        Log.e("upload_files", files_2_upload.get(0) + "");
+        Log.e("upload_files", files_2_upload.size() + "");
         current_body = 1 ;
         showProgressDialog(getString(R.string.dialog_msg_loading));
         ProgressRequestBody.UploadCallbacks  UploadCallbacks = new ProgressRequestBody.UploadCallbacks() {

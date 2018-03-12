@@ -218,15 +218,36 @@ public class Validation {
                 Log.e("phone" , "notvalid");
                 textInputLayout.setError(AppController.getInstance().getApplicationContext().getString(R.string.phone_error));
                 editText.requestFocus();
-                return true;
+                return false;
             }
             else{
                 Log.e("phone" , "valid");
                 textInputLayout.setError(null);
-                return false;
+                return true;
             }
 
-        }else return true ;
+        }else return false ;
+    }
+
+    public static boolean isGradeValid(EditText grade, TextInputLayout grade_layout) {
+        try {
+            double gradeS = Double.parseDouble(grade.getText().toString());
+            if (!(gradeS > 0 && gradeS < 100))
+            {
+                Log.e("grade" , "notvalid");
+                grade_layout.setError(AppController.getInstance().getApplicationContext().getString(R.string.grade_error));
+                grade.requestFocus();
+                return false;
+            }
+            else{
+                Log.e("grade" , "valid");
+                grade_layout.setError(null);
+                return true;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /*public static boolean validateCheckbox(CheckBox terms_check_bx) {
