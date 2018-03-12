@@ -1,7 +1,6 @@
 package com.gp.mygp.Adapter;
 
 import android.content.Context;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,8 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.gp.mygp.Model.InfoItem;
+import com.gp.mygp.Callback.InfoItemClickListener;
+import com.gp.mygp.Model.UniversityInfoItem;
 import com.gp.mygp.R;
 import com.gp.mygp.ViewHolder.InfoVH;
 import com.gp.mygp.ViewHolder.MajorVH;
@@ -22,12 +22,14 @@ import java.util.ArrayList;
 
 public class InfoAdapter extends RecyclerView.Adapter<InfoVH> {
 
-    private ArrayList<InfoItem> data;
+    private ArrayList<UniversityInfoItem> data;
     private Context context;
+    private InfoItemClickListener clickListener;
 
-    public InfoAdapter(ArrayList<InfoItem> data, Context context) {
+    public InfoAdapter(ArrayList<UniversityInfoItem> data, Context context, InfoItemClickListener clickListener) {
         this.data = data;
         this.context = context;
+        this.clickListener = clickListener;
     }
 
     @Override
@@ -39,7 +41,17 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoVH> {
 
     @Override
     public void onBindViewHolder(InfoVH holder, int position) {
-        InfoItem item = data.get(position);
+        final UniversityInfoItem item = data.get(position);
+        holder.itemView.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(clickListener != null){
+                            clickListener.onInfoItemClicked(item);
+                        }
+                    }
+                }
+        );
         holder.title.setText(item.getTitle());
         holder.desc.setText(item.getDesc());
         holder.grades.setText(item.getMinPerc() + "%");
@@ -62,7 +74,6 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoVH> {
         View v = LayoutInflater.from(context)
                 .inflate(R.layout.major_item, null, false);
         MajorVH vh = new MajorVH(v) ;
-
         vh.title.setText(major);
         return vh.itemView ;
     }
@@ -72,7 +83,7 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoVH> {
         return data == null ? 0 : data.size();
     }
 
-    public void update(ArrayList<InfoItem> data){
+    public void update(ArrayList<UniversityInfoItem> data){
         this.data = data;
         notifyDataSetChanged();
     }

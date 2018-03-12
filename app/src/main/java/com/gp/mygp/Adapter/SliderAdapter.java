@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+import com.gp.mygp.Model.SliderItem;
 
 import java.util.ArrayList;
 
@@ -19,10 +20,10 @@ import java.util.ArrayList;
 public class SliderAdapter extends PagerAdapter {
 
     private Context context;
-    private ArrayList<String> images;
+    private ArrayList<SliderItem> images;
 
 
-    public SliderAdapter(Context context, ArrayList<String> images) {
+    public SliderAdapter(Context context, ArrayList<SliderItem> images) {
         this.context = context;
         this.images = images;
     }
@@ -40,7 +41,8 @@ public class SliderAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        String image = images.get(position);
+        SliderItem sliderItem = images.get(position);
+        String image = sliderItem.getUrl();
 
         LinearLayout linearLayout = new LinearLayout(context);
         ViewPager.LayoutParams params = new ViewPager.LayoutParams();
@@ -85,7 +87,7 @@ public class SliderAdapter extends PagerAdapter {
         }
     }
 
-    public void update(ArrayList<String> data){
+    public void update(ArrayList<SliderItem> data){
         this.images = data;
         notifyDataSetChanged();
     }

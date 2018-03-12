@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Created by Ahmed Naeem on 2/25/2018.
  */
 
-public class InfoItem {
+public class UniversityInfoItem {
 
     private String logo;
     private String title;
@@ -16,7 +16,7 @@ public class InfoItem {
     private ArrayList<String> majors;
     private int minPerc;
 
-    public InfoItem(String logo, String title, int rate, String cover, String desc, ArrayList<String> majors, int minPerc) {
+    public UniversityInfoItem(String logo, String title, int rate, String cover, String desc, ArrayList<String> majors, int minPerc) {
         this.logo = logo;
         this.title = title;
         this.rate = rate;

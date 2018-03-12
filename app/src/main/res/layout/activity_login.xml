@@ -29,7 +29,8 @@
         <android.support.design.widget.TextInputLayout
             android:textColorHint="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/username">
 
             <EditText
                 android:hint="@string/username"
@@ -40,17 +41,19 @@
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:id="@+id/username_layout"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="@color/white"
-            android:hint="password"
+            android:hint="@string/password"
             android:layout_marginTop="12dp"
             android:textColorHint="#fff"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/password_layout">
             <EditText
                 android:textAlignment="viewStart"
                 android:drawablePadding="4dp"
@@ -60,7 +63,8 @@
                 android:inputType="textPassword"
                 android:textColor="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:id="@+id/password"/>
         </android.support.design.widget.TextInputLayout>
 
 
@@ -89,6 +93,9 @@
 
     </LinearLayout>
 
+    <include layout="@layout/loading"/>
+
+    <include layout="@layout/no_internet"/>
 
 
 
