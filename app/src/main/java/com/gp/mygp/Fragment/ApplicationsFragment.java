@@ -14,14 +14,21 @@ import android.view.ViewGroup;
 import com.gp.mygp.Activity.DetailsActivity;
 import com.gp.mygp.Adapter.ApplicationsAdapter;
 import com.gp.mygp.Adapter.NotificationAdapter;
+import com.gp.mygp.AppController;
 import com.gp.mygp.Callback.ApplicationClickListener;
+import com.gp.mygp.Callback.ConnectionCallback;
 import com.gp.mygp.Model.ApplicationItem;
+import com.gp.mygp.Model.NotificationItem;
 import com.gp.mygp.R;
+import com.gp.mygp.Service.CallbackWithRetry;
+import com.gp.mygp.Service.Injector;
+import com.gp.mygp.Service.onRequestFailure;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Response;
 
 /**
  * Created by Ahmed Naeem on 3/12/2018.
@@ -56,26 +63,36 @@ public class ApplicationsFragment extends BaseFragment
         adapter = new ApplicationsAdapter(null, getContext(), this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
-
-        ArrayList<ApplicationItem> applicationItems = new ArrayList<>();
-        applicationItems.add(new ApplicationItem("Helwan University", "12 nov 2012", ApplicationItem.STATUS_PENDING, 50_000, 5_000));
-        applicationItems.add(new ApplicationItem("Helwan University", "12 nov 2012", ApplicationItem.STATUS_PENDING, 50_000, 5_000));
-        applicationItems.add(new ApplicationItem("Helwan University", "12 nov 2012", ApplicationItem.STATUS_PENDING, 50_000, 5_000));
-        applicationItems.add(new ApplicationItem("Helwan University", "12 nov 2012", ApplicationItem.STATUS_PENDING, 50_000, 5_000));
-        applicationItems.add(new ApplicationItem("Helwan University", "12 nov 2012", ApplicationItem.STATUS_PENDING, 50_000, 5_000));
-        applicationItems.add(new ApplicationItem("Helwan University", "12 nov 2012", ApplicationItem.STATUS_PENDING, 50_000, 5_000));
-        adapter.updateData(applicationItems);
+        loadData();
 
     }
 
     private void loadData(){
-
+        retrofit2.Call<ArrayList<ApplicationItem>> call = Injector.Api().getApps( AppController.getInstance().getPrefManager().getUser().getId()+"");
+        call.enqueue(new CallbackWithRetry<ArrayList<ApplicationItem>>(call, new onRequestFailure() {
+            @Override
+            public void onFailure() {
+                showNoInternet(new ConnectionCallback() {
+                    @Override
+                    public void onRetry() {
+                        loadData();
+                    }
+                });
+            }
+        }) {
+            @Override
+            public void onResponse(retrofit2.Call<ArrayList<ApplicationItem>> call, Response<ArrayList<ApplicationItem>> response) {
+                showProgress(false);
+                if (response.isSuccessful() && response.body() !=null){
+                    adapter.updateData(response.body());
+                }
+            }
+        });
     }
 
     @Override
     public void onApplicationClicked(ApplicationItem applicationItem) {
-        int uni = applicationItem.getUniversityId();
-        DetailsActivity.setUniversityId(uni);
+        DetailsActivity.setInfoItem(applicationItem.getUni());
         Intent i = new Intent(getContext(), DetailsActivity.class);
         startActivity(i);
     }

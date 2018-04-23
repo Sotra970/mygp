@@ -36,7 +36,7 @@ public class UplodFileActivity extends LoadingDialogActivity {
     private String MultipartBodyKey;
 
     public interface  onUploadResponse{
-        void onSuccess(PdfUploadResponse pdfUploadResponse, ArrayList<String> paths);
+        void onSuccess(ArrayList<String> web_path_name, ArrayList<String> paths);
         void onFailure();
     }
     String[] ext_arr;
@@ -145,20 +145,25 @@ public class UplodFileActivity extends LoadingDialogActivity {
         ArrayList< MultipartBody.Part> multipartBodies = new ArrayList<>();
         for (File child : files_2_upload) {
             ProgressRequestBody fileBody = new ProgressRequestBody(child, UploadCallbacks, current_body, files_2_upload.size());
+            String child_name = child.getName() ;
             MultipartBody.Part body =
-                    MultipartBody.Part.createFormData(MultipartBodyKey, AppController.getInstance().currentDateFormat(), fileBody);
+                    MultipartBody.Part.createFormData(
+                            MultipartBodyKey,
+                            AppController.getInstance().currentDateFormat()+"."+child_name.substring(child_name.lastIndexOf("."),child_name.length()),
+                            fileBody
+                    );
             multipartBodies.add(body);
             current_body++;
         }
-        Call<PdfUploadResponse> call = Injector.UploadApi().uploadPdf(
-                    multipartBodies.get(0)
+        Call<ArrayList<String>> call = Injector.UploadApi().uploadPdf(
+                    multipartBodies
             );
-        call.enqueue(new Callback<PdfUploadResponse>() {
+        call.enqueue(new Callback<ArrayList<String>>() {
             @Override
-            public void onResponse(Call<PdfUploadResponse> call,
-                                   Response<PdfUploadResponse> response) {
+            public void onResponse(Call<ArrayList<String>> call,
+                                   Response<ArrayList<String>> response) {
                 Log.e("OkHttp_upload_exp", "success");
-                if (response.isSuccessful() && response.body().getPath()!=null && !response.body().getPath().isEmpty() && response.body().getUploadedPdfName()!=null &&  !response.body().getUploadedPdfName().isEmpty()){
+                if (response.isSuccessful() && response.body()!=null && !response.body().isEmpty() ){
                     onUploadResponse.onSuccess(response.body() , filePathsTemp) ;
                 }else {
                   onUploadResponse.onFailure();
@@ -167,10 +172,10 @@ public class UplodFileActivity extends LoadingDialogActivity {
             }
 
             @Override
-            public void onFailure(Call<PdfUploadResponse> call, Throwable t) {
+            public void onFailure(Call<ArrayList<String>> call, Throwable t) {
                 Log.e("OkHttp_upload_exp"," error"+ t.getMessage()+"  " + t.toString());
                 hideProgressDialog();
-//                onUploadResponse.onFailure();
+                onUploadResponse.onFailure();
                 showConnectionLoading(MessageActionDialog.RETRY, new MessageActionDialog.ActionClick() {
                     @Override
                     public void onClick(MessageActionDialog messageActionDialog) {

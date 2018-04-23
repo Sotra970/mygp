@@ -21,6 +21,7 @@ public class SpalshActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+
         Handler ui = new Handler(Looper.getMainLooper());
         if(AppController.getInstance().isUserSigned()){
             ui.postDelayed(

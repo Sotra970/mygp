@@ -5,11 +5,14 @@ import android.app.Application;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.multidex.MultiDex;
 
 import com.gp.mygp.Service.MyPreferenceManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import static com.gp.mygp.Service.Config.BASE_IMAGE_URL;
 
 /**
  * Created by Ahmed on 8/17/2017.
@@ -28,6 +31,7 @@ public class AppController extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        MultiDex.install(this);
         mInstance = this;
     }
 
@@ -47,6 +51,10 @@ public class AppController extends Application {
     public static boolean hasNetwork ()
     {
         return mInstance.checkIfHasNetwork();
+    }
+
+    public static String getImageUrl(String name){
+        return BASE_IMAGE_URL + "/" + name;
     }
 
     public boolean checkIfHasNetwork()

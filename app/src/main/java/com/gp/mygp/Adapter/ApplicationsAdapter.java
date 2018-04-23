@@ -6,10 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.gp.mygp.AppController;
 import com.gp.mygp.Callback.ApplicationClickListener;
 import com.gp.mygp.Model.ApplicationItem;
 import com.gp.mygp.Model.NotificationItem;
 import com.gp.mygp.R;
+import com.gp.mygp.Service.Config;
 import com.gp.mygp.ViewHolder.ApplicationVH;
 
 import java.util.ArrayList;
@@ -39,6 +44,50 @@ public class ApplicationsAdapter extends RecyclerView.Adapter<ApplicationVH> {
     @Override
     public void onBindViewHolder(ApplicationVH holder, int position) {
         final ApplicationItem item = applicationItems.get(position);
+        holder.title.setText(item.getUni().getTitle());
+        holder.date.setText(item.getDate());
+        holder.faculty.setText(item.getFac().getTitle());
+        holder.cost.setText(item.getFac().getCost()+"");
+        holder.deposit.setText(item.getFac().getDeposit()+"");
+        Glide.with(holder.image.getContext())
+                .load(AppController.getImageUrl(item.getUni().getLogo()))
+                .apply(new RequestOptions().circleCrop())
+                .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
+                .into(holder.image) ;
+
+        switch (item.getStatus()){
+
+            case Config.APP : {
+                holder.status.setText("Apply");
+                break;
+            }
+            case Config.ACC : {
+                holder.status.setText("Accepted");
+                break;
+            }
+
+            case Config.REJ : {
+                holder.status.setText("Rejected");
+                break;
+            }
+
+            case Config.WL : {
+                holder.status.setText("Waiting list");
+                break;
+            }
+
+
+            case Config.WR : {
+                holder.status.setText("Waiting for response");
+                break;
+            }
+
+            case Config.ATT : {
+                holder.status.setText("Attach bank statement");
+                break;
+            }
+
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

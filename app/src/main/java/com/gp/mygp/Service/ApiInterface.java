@@ -2,10 +2,12 @@ package com.gp.mygp.Service;
 
 
 import com.gp.mygp.Model.ApplicationItem;
+import com.gp.mygp.Model.FacultyItem;
 import com.gp.mygp.Model.NotificationItem;
 import com.gp.mygp.Model.SliderItem;
 import com.gp.mygp.Model.UniversityInfoItem;
 import com.gp.mygp.Model.UserItem;
+import com.gp.mygp.Response.StatusResponse;
 
 import java.util.ArrayList;
 
@@ -14,7 +16,10 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by Ahmed on 8/29/2017.
@@ -22,22 +27,12 @@ import retrofit2.http.POST;
 
 public interface ApiInterface {
 
-    @FormUrlEncoded
-    @POST("")
-    Call<ArrayList<ApplicationItem>> getApplications(@Field("id") int userId);
-
-    @POST("")
+    @GET("api/unis")
     Call<ArrayList<UniversityInfoItem>> getUnis();
 
-    @POST("")
+    @GET("api/slider")
     Call<ArrayList<SliderItem>> getSliders();
 
-    @POST("")
-    Call<ResponseBody> updateUserInfo(@Body UserItem userItem);
-
-    @FormUrlEncoded
-    @POST("")
-    Call<ArrayList<NotificationItem>> getNotifs(@Field("id") int userId);
 
     @FormUrlEncoded
     @POST("api/login")
@@ -52,8 +47,40 @@ public interface ApiInterface {
             @Body UserItem userModel
     );
 
-    @POST("")
+    @GET("api/search/{name}")
     Call<ArrayList<UniversityInfoItem>> search(
-            @Field("query") String query
+            @Path("name") String query
     );
+
+    @GET("api/noti/{user_id}")
+    Call<ArrayList<NotificationItem>> getNotfications(
+            @Path("user_id") String user_id
+    );
+
+
+    @GET("api/apps/{user_id}")
+    Call<ArrayList<ApplicationItem>> getApps(
+            @Path("user_id") String user_id
+    );
+
+    @GET("api/checkStatus/{userId}/{uni_id}")
+    Call<StatusResponse> checkStatus(
+            @Path("userId") int userId,
+            @Path("uni_id") int uni_id
+    );
+
+    @POST("api/apply")
+    Call<StatusResponse> apply(
+            @Body ApplyBody applyBody
+    );
+
+    @FormUrlEncoded
+    @POST("api/attach")
+    Call<StatusResponse> attach(
+           @Field("user_id") int user_id,
+           @Field("uni_id") int uni_id,
+           @Field("stmt_link") String stmt_link
+    );
+
+    Call<ResponseBody> updateUserInfo(UserItem userItem);
 }

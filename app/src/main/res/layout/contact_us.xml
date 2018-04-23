@@ -68,6 +68,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:id="@+id/phone"
                 android:text="@string/phone_num"/>
 
             <ImageView
@@ -99,6 +100,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:id="@+id/email"
                 android:text="@string/mail"/>
 
             <ImageView

@@ -7,8 +7,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.gp.mygp.Activity.SpalshActivity;
 import com.gp.mygp.Model.UserItem;
+
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MyPreferenceManager {
 
@@ -27,26 +30,14 @@ public class MyPreferenceManager {
     int PRIVATE_MODE = 0;
 
     // Sharedpref file name
-    private static final String PREF_NAME = "ezzay";
+    private static final String PREF_NAME = "UNIGP";
 
 
 
 
 
     // All Shared Preferences Keys
-    private static final String KEY_USER_ID = "user_id";
-    private static final String KEY_NAME= "name";
-    private static final String KEY_USER_NAME ="user_name";
-    private static final String KEY_USER_PHONE = "user_phone";
-    private static final String KEY_USER_IMG = "user_img";
-    private static final String KEY_USER_email = "user_email";
-    private static final String KEY_USER_COUNTRY_ID = "state_id";
-    private static final String KEY_USER_city_ID = "city_id";
-    private static final String KEY_USER_ADDRESS = "address";
-    private static final String KEY_USER_COMPANY = "company";
-    private static final String KEY_USER_WORK_FIELD = "work_field";
-    private static final String KEY_USER_CODE = "code";
-
+    private static final String KEY_USER= "USER";
 
     public static final String KEY_INCREMENT_NOTFICATiON = "KEY_INCREMENT_NOTFICATiON";
 
@@ -64,11 +55,8 @@ public class MyPreferenceManager {
     public void storeUser(UserItem user) {
         editor.clear();
         editor.commit();
-
-        editor.putInt(KEY_USER_ID, user.getId());
-        editor.putString(KEY_USER_NAME, user.getUsername());
-        editor.putString(KEY_USER_PHONE , user.getPhone());
-        editor.putString(KEY_USER_email , user.getEmail());
+        String user_js = new Gson().toJson(user) ;
+        editor.putString(KEY_USER , user_js);
         editor.commit();
 
 
@@ -76,25 +64,14 @@ public class MyPreferenceManager {
     }
 
     public UserItem getUser() {
-        if (pref.getInt(KEY_USER_ID, 0) != 0) {
+        if (!pref.getString(KEY_USER, "").isEmpty()) {
 
-             int ID;
-             String UserName;
-             String Phone;
-             String Email;
 
-            ID = pref.getInt(KEY_USER_ID, 0);
-            UserName = pref.getString(KEY_USER_NAME, " ");
-            Phone  = pref.getString(KEY_USER_PHONE, " ");
-            Email  = pref.getString(KEY_USER_email   ," ");
 
-            UserItem user = new UserItem();
-            user.setId(ID);
-            user.setUsername(UserName);
-            user.setPhone(Phone);
-            user.setEmail(Email);
+            String user_js  = pref.getString(KEY_USER   ," ");
 
-            return user;
+
+            return new Gson().fromJson(user_js,UserItem.class);
         }
         return null;
     }

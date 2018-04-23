@@ -3,12 +3,14 @@ package com.gp.mygp.Adapter;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+import com.gp.mygp.AppController;
 import com.gp.mygp.Model.SliderItem;
 
 import java.util.ArrayList;
@@ -42,7 +44,8 @@ public class SliderAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         SliderItem sliderItem = images.get(position);
-        String image = sliderItem.getUrl();
+        String image = sliderItem.getImage();
+
 
         LinearLayout linearLayout = new LinearLayout(context);
         ViewPager.LayoutParams params = new ViewPager.LayoutParams();
@@ -65,7 +68,7 @@ public class SliderAdapter extends PagerAdapter {
         linearLayout.addView(imageView);
 
         Glide.with(context)
-                .load(Integer.parseInt(image))
+                .load(AppController.getImageUrl(image))
                 .into(imageView);
 
         container.addView(linearLayout);
@@ -88,6 +91,7 @@ public class SliderAdapter extends PagerAdapter {
     }
 
     public void update(ArrayList<SliderItem> data){
+        Log.e("slider_data_count", (data == null ? 0 : data.size()) + "");
         this.images = data;
         notifyDataSetChanged();
     }

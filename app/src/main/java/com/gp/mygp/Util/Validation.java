@@ -237,16 +237,16 @@ public class Validation {
                 Log.e("grade" , "notvalid");
                 grade_layout.setError(AppController.getInstance().getApplicationContext().getString(R.string.grade_error));
                 grade.requestFocus();
-                return false;
+                return true;
             }
             else{
                 Log.e("grade" , "valid");
                 grade_layout.setError(null);
-                return true;
+                return false;
             }
         }catch (Exception e){
             e.printStackTrace();
-            return false;
+            return true;
         }
     }
 
@@ -284,14 +284,14 @@ public class Validation {
         {
             if (!editText.getText().toString().equals(editText2.getText().toString()))
             {
-                editText.setError(AppController.getInstance().getApplicationContext().getString(R.string.password_not_match));
-                editText.requestFocus();
-                return false;
+                textInputLayout.setError(AppController.getInstance().getApplicationContext().getString(R.string.password_not_match));
+                textInputLayout.requestFocus();
+                return true;
             }
             else
-                return true;
+                return false;
         }
-        else return false ;
+        else return true ;
 
     }
 

@@ -5,9 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,12 +24,9 @@ import com.gp.mygp.Util.Validation;
 
 import java.util.ArrayList;
 
-import javax.xml.validation.Validator;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -69,7 +65,7 @@ public class SignupActivity extends UplodFileActivity {
     @BindView(R.id.attach_text)
     TextView attachText;
 
-    private String uploadedFile = "temp.pdf";
+    private String uploadedFile;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,7 +76,6 @@ public class SignupActivity extends UplodFileActivity {
 
     @OnClick(R.id.signup)
     void confirm(){
-       // startActivity(new Intent(getApplicationContext() , HomepageActivity.class));
         if(validate()){
             doSignup();
         }
@@ -127,7 +122,10 @@ public class SignupActivity extends UplodFileActivity {
                     startActivity(new Intent(getApplicationContext() , HomepageActivity.class));
                     finish();
                 }else{
-                    unexpError();
+                    switch (response.code()){
+                        case 409 : showToast(getApplicationContext() , "duplicated email");break;
+                        case 410 : showToast(getApplicationContext() , "duplicated phone");break;
+                    }
                 }
                 showProgress(false);
             }
@@ -137,15 +135,17 @@ public class SignupActivity extends UplodFileActivity {
 
     @OnClick(R.id.attach)
     void attach(){
-        pick_File_permission(1, new String[]{"pdf"}, "pdf_file", new onUploadResponse() {
+        pick_File_permission(1, new String[]{"pdf"}, "file[]", new onUploadResponse() {
             @Override
-            public void onSuccess(PdfUploadResponse pdfUploadResponse, ArrayList<String> paths) {
+            public void onSuccess(ArrayList<String> web_path_names, ArrayList<String> paths) {
                 attachIcon.setImageResource(R.drawable.ic_check_black_24dp);
-                uploadedFile = paths.get(0);
+                uploadedFile = web_path_names.get(0);
+                Log.e("attach" , "onSuccess"  + uploadedFile );
             }
 
             @Override
             public void onFailure() {
+                    showProgress(false);
             }
         });
     }
@@ -156,21 +156,15 @@ public class SignupActivity extends UplodFileActivity {
                 !Validation.isEditTextEmpty(phone, phone_layout) &&
                 !Validation.isEditTextEmpty(password, password_layout) &&
                 !Validation.isEditTextEmpty(confirm_password, confirm_password_layout) &&
-                Validation.isEmailValid(email, email_layout) &&
-                //Validation.validatePhone(phone, phone_layout) &&
-                Validation.isPasswordsTheSame(password, confirm_password_layout, confirm_password) &&
-                Validation.isGradeValid(grade, grade_layout);
-        return true;
-        /*if(b){
-            if(uploadedFile == null){
-                Toast.makeText(this, R.string.select_doc, Toast.LENGTH_SHORT).show();
-                return false;
-            }else{
-                return true;
-            }
-        }else{
-            return false;
-        }*/
+                !Validation.isEmailValid(email, email_layout) &&
+                !Validation.isPasswordsTheSame(confirm_password, confirm_password_layout, password) &&
+                !Validation.isGradeValid(grade, grade_layout)&&
+                !TextUtils.isEmpty(uploadedFile);
+
+        if (TextUtils.isEmpty(uploadedFile)){
+            showToast(this , "upload ur application pdf ");
+        }
+        return b;
     }
 
 

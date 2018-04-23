@@ -6,9 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.gp.mygp.AppController;
 import com.gp.mygp.Callback.NotificationClickListener;
 import com.gp.mygp.Model.NotificationItem;
 import com.gp.mygp.R;
+import com.gp.mygp.Service.Config;
 import com.gp.mygp.ViewHolder.NotificationVH;
 
 import java.util.ArrayList;
@@ -39,9 +44,14 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationVH> {
     @Override
     public void onBindViewHolder(NotificationVH holder, int position) {
         final NotificationItem item = notificationItems.get(position);
-        holder.title.setText(item.getUni());
-        holder.date.setText(item.getDate());
-        holder.msg.setText(item.getMsg());
+        holder.title.setText(item.getTitle());
+        holder.date.setText(item.getDate()+"");
+        holder.msg.setText(item.getBody());
+        Glide.with(holder.image.getContext())
+                .load(AppController.getImageUrl(item.getUni().getLogo()))
+                .apply(new RequestOptions().circleCrop())
+                .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
+                .into(holder.image) ;
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

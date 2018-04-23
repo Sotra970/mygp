@@ -50,10 +50,10 @@ public class HomepageFragment extends BaseFragment implements InfoItemClickListe
     RecyclerView infoRecycler;
     @BindView(R.id.slider)
     SmoothViewPager slider;
-
+    @BindView(R.id.slider_layout)
+    View sliderLayout;
     @BindView(R.id.indicator)
     PageIndicatorView indicator;
-
     private SliderAdapter sliderAdapter;
     private ThumbnailAdapter thumbnailAdapter;
     private InfoAdapter infoAdapter;
@@ -74,14 +74,21 @@ public class HomepageFragment extends BaseFragment implements InfoItemClickListe
             initSlider();
             initThumbnails();
             initInfo();
-            loadData();
+            getSliders();
+            //loadData();
         }
         return theView;
     }
 
+    private void initThumbnails() {
+        thumbnailAdapter = new ThumbnailAdapter(null, getContext());
+        thumbnailRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        thumbnailRecycler.setAdapter(thumbnailAdapter);
+    }
+
     private void initSlider() {
         slider.setAllowManualSwitch(true);
-        final PagerSwitcher switcher = new PagerSwitcher(getContext(), slider);
+        final PagerSwitcher switcher = new PagerSwitcher(getContext(), slider, 0);
         switcher.setRun(true);
         switcher.startSwitching();
         slider.addOnPageChangeListener(
@@ -103,20 +110,9 @@ public class HomepageFragment extends BaseFragment implements InfoItemClickListe
         );
         sliderAdapter = new SliderAdapter(getContext(), null);
         slider.setAdapter(sliderAdapter);
+        indicator.setViewPager(slider);
     }
 
-
-    private void initThumbnails() {
-        ArrayList<ThumbnailItem> thumbnailItems = new ArrayList<>() ;
-        thumbnailItems.add(new ThumbnailItem(R.drawable.oct6_logo+"")) ;
-        thumbnailItems.add(new ThumbnailItem(R.drawable.oct6_logo+"")) ;
-        thumbnailItems.add(new ThumbnailItem(R.drawable.oct6_logo+"")) ;
-        thumbnailItems.add(new ThumbnailItem(R.drawable.oct6_logo+"")) ;
-        thumbnailItems.add(new ThumbnailItem(R.drawable.oct6_logo+"")) ;
-        thumbnailAdapter = new ThumbnailAdapter(thumbnailItems , getContext()) ;
-        thumbnailRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        thumbnailRecycler.setAdapter(thumbnailAdapter);
-    }
 
     private void initInfo() {
         infoAdapter = new InfoAdapter(null, getContext(), this);
@@ -124,33 +120,9 @@ public class HomepageFragment extends BaseFragment implements InfoItemClickListe
         infoRecycler.setAdapter(infoAdapter);
     }
 
-    private void loadData(){
-        ArrayList<UniversityInfoItem> universityInfoItems = new ArrayList<>();
-        ArrayList<String> maj = new ArrayList<>();
-        maj.add("Computer Science");
-        maj.add("Engineering");
-        maj.add("Business Administration ");
-        maj.add("Fine Arts ");
-
-        UniversityInfoItem universityInfoItem =  new UniversityInfoItem(
-                ""+R.drawable.oct6_logo,
-                "October University",
-                3,
-                ""+R.drawable.oct_cover,
-                getString(R.string.oct_desc),
-                maj,
-                70
-        );
-        universityInfoItems.add(universityInfoItem);
-        universityInfoItems.add(universityInfoItem);
-        universityInfoItems.add(universityInfoItem);
-        universityInfoItems.add(universityInfoItem);
-        universityInfoItems.add(universityInfoItem);
-        infoAdapter.update(universityInfoItems);
-    }
-
     @Override
     public void onInfoItemClicked(UniversityInfoItem universityInfoItem) {
+        DetailsActivity.setInfoItem(universityInfoItem);
         Intent i = new Intent(getContext(), DetailsActivity.class);
         startActivity(i);
     }
@@ -209,6 +181,11 @@ public class HomepageFragment extends BaseFragment implements InfoItemClickListe
                     allData = response.body();
                     if(infoAdapter != null)
                         infoAdapter.update(allData);
+                    if(thumbnailAdapter != null) {
+                        thumbnailAdapter.update(allData);
+                        indicator.setViewPager(slider);
+                        indicator.setCount(allData == null ? 0 : allData.size());
+                    }
                     showProgress(false);
                 }
             }
@@ -234,11 +211,27 @@ public class HomepageFragment extends BaseFragment implements InfoItemClickListe
         ) {
             @Override
             public void onResponse(@NonNull Call<ArrayList<UniversityInfoItem>> call, @NonNull Response<ArrayList<UniversityInfoItem>> response) {
+                sliderLayout.setVisibility(View.GONE);
                 if(response.isSuccessful()){
                     searchRes = response.body();
                     if(infoAdapter != null){
                         infoAdapter.update(searchRes);
                     }
+                    if(thumbnailAdapter != null){
+                        thumbnailAdapter.update(null);
+                    }
+                    showNoData(false);
+                }else{
+                    if(response.code() == 404){
+                        // not found
+                        if(infoAdapter != null){
+                            infoAdapter.update(null);
+                        }
+                        if(thumbnailAdapter != null){
+                            thumbnailAdapter.update(null);
+                        }
+                    }
+                    showNoData(true);
                 }
                 showProgress(false);
             }
@@ -246,8 +239,13 @@ public class HomepageFragment extends BaseFragment implements InfoItemClickListe
     }
 
     public void clearSearch() {
+        showNoData(false);
+        sliderLayout.setVisibility(View.VISIBLE);
         if(infoAdapter != null){
             infoAdapter.update(allData);
+        }
+        if(thumbnailAdapter != null){
+            thumbnailAdapter.update(allData);
         }
     }
 }

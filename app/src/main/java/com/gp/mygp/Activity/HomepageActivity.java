@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -21,6 +22,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SearchView;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.gp.mygp.AppController;
 import com.gp.mygp.Fragment.AboutFragment;
 import com.gp.mygp.Fragment.ApplicationsFragment;
@@ -32,12 +35,13 @@ import com.gp.mygp.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Ahmed Naeem on 2/25/2018.
  */
 
-public class HomepageActivity extends AppCompatActivity
+public class HomepageActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
     @BindView(R.id.toolbar)
@@ -54,9 +58,22 @@ public class HomepageActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
         ButterKnife.bind(this);
+
+        FirebaseMessaging.getInstance().subscribeToTopic(AppController.getInstance().getPrefManager().getUser().getId()+"");
         initNavDrawer();
         initSearch();
         showHomepage();
+    }
+
+    @OnClick(R.id.search_icon)
+    void search_icon_click(){
+        String query = searchView.getQuery().toString();
+        if(query == null || TextUtils.isEmpty(query))
+            clearSearch();
+        else
+            doSearch(query);
+
+        searchView.clearFocus();
     }
 
     private void initSearch() {
@@ -66,7 +83,7 @@ public class HomepageActivity extends AppCompatActivity
         closeButton.setColorFilter(
                 ResourcesCompat.getColor(
                         getResources(),
-                        R.color.white,
+                        R.color.grey_900,
                         null
                 ),
                 PorterDuff.Mode.SRC_IN
@@ -76,7 +93,7 @@ public class HomepageActivity extends AppCompatActivity
         et.setTextColor(
                 ResourcesCompat.getColor(
                         getResources(),
-                        R.color.white,
+                        R.color.grey_900,
                         null
                 )
         );
@@ -139,6 +156,7 @@ public class HomepageActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.nav_home);
     }
 
     public void showFragment(Fragment fragment){
@@ -148,10 +166,11 @@ public class HomepageActivity extends AppCompatActivity
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.container, fragment)
-                    .addToBackStack("")
                     .commit();
         }
     }
+
+
 
     private void switchSearch(boolean b) {
         search_layout.setVisibility(b ? View.VISIBLE : View.GONE);
@@ -159,7 +178,7 @@ public class HomepageActivity extends AppCompatActivity
 
     private void showHomepage(){
         Fragment home = HomepageFragment.getInstance();
-        showFragment(home);
+        showFragment(home );
     }
 
     @Override
@@ -208,9 +227,9 @@ public class HomepageActivity extends AppCompatActivity
             case R.id.nav_applications:
                 fragment = ApplicationsFragment.getInstance();
                 break;
-            case R.id.nav_profile:
-                fragment = ProfileFragment.getInstance();
-                break;
+    /*        case R.id.nav_profile:
+                fragment = ProfileFragment.getInstance();*/
+//                break;
             case R.id.nav_home:
                 fragment = HomepageFragment.getInstance();
                 break;

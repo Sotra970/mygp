@@ -2,13 +2,16 @@ package com.gp.mygp.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.gp.mygp.AppController;
 import com.gp.mygp.Callback.InfoItemClickListener;
+import com.gp.mygp.Model.FacultyItem;
 import com.gp.mygp.Model.UniversityInfoItem;
 import com.gp.mygp.R;
 import com.gp.mygp.ViewHolder.InfoVH;
@@ -54,18 +57,20 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoVH> {
         );
         holder.title.setText(item.getTitle());
         holder.desc.setText(item.getDesc());
-        holder.grades.setText(item.getMinPerc() + "%");
+        String from = context.getText(R.string.from) + " " + item.getMinPerc() + "%";
+        holder.grades.setText(from);
         Glide.with(context)
-                .load(Integer.parseInt(item.getCover()))
+                .load(AppController.getImageUrl(item.getCover()))
                 .apply(new RequestOptions().centerCrop())
                 .into(holder.cover);
         Glide.with(context)
-                .load(Integer.parseInt(item.getLogo()))
+                .load(AppController.getImageUrl(item.getLogo()))
                 .apply(new RequestOptions().fitCenter())
                 .apply(new RequestOptions().circleCrop())
                 .into(holder.logo);
-        for (String major : item.getMajors()){
-            holder.majors.addView(getMajorView(major));
+        holder.majors.removeAllViews();
+        for (FacultyItem facultyItem : item.getFacultyItems()){
+            holder.majors.addView(getMajorView(facultyItem.getTitle()));
         }
 
     }
@@ -84,6 +89,7 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoVH> {
     }
 
     public void update(ArrayList<UniversityInfoItem> data){
+        Log.e("info_adapter", "data_size == " + (data == null ? 0 : data.size()));
         this.data = data;
         notifyDataSetChanged();
     }

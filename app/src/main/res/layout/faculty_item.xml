@@ -91,7 +91,7 @@
                 app:flChildSpacing="6dp"
                 app:flChildSpacingForLastRow="align"
                 app:flRowSpacing="8dp"
-                android:id="@+id/departs"
+                android:id="@+id/majors"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 />

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,7 +21,6 @@ import com.gp.mygp.Util.Validation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -90,16 +88,24 @@ public class LoginActivity extends BaseActivity {
         ) {
             @Override
             public void onResponse(@NonNull Call<UserItem> call, @NonNull Response<UserItem> response) {
+                showProgress(false);
                 if(response.isSuccessful()){
                     AppController.getInstance().getPrefManager().storeUser(response.body());
                     startActivity(new Intent(getApplicationContext() , HomepageActivity.class));
                     finish();
                 }else{
-                    unexpError();
+                    loginError(response.code());
                 }
-                showProgress(false);
             }
         });
+    }
+
+
+    public void loginError(int code){
+        if (code == 403)
+            Toast.makeText(this, R.string.wrong_password, Toast.LENGTH_SHORT).show();
+        if (code == 404)
+            Toast.makeText(this, R.string.wrong_username, Toast.LENGTH_SHORT).show();
     }
 
     private boolean validate(){

@@ -81,8 +81,7 @@ public class Injector
                 .build();
     }
 
-    private static Cache provideCache ()
-    {
+    private static Cache provideCache () {
         Cache cache = null;
         try
         {

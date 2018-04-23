@@ -6,25 +6,69 @@ package com.gp.mygp.Model;
 
 public class NotificationItem {
 
-    private String uni;
-    private String date;
-    private String msg;
+    private String id;
+    private String user_id;
+    private String uni_id;
+    private String title;
+    private String body;
 
-    public NotificationItem(String uni, String date, String msg) {
-        this.uni = uni;
-        this.date = date;
-        this.msg = msg;
+    private UniversityInfoItem uni;
+    private String date;
+
+
+    public String getId() {
+        return id;
     }
 
-    public String getUni() {
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
+
+    public String getUni_id() {
+        return uni_id;
+    }
+
+    public void setUni_id(String uni_id) {
+        this.uni_id = uni_id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public UniversityInfoItem getUni() {
         return uni;
+    }
+
+    public void setUni(UniversityInfoItem uni) {
+        this.uni = uni;
     }
 
     public String getDate() {
         return date;
     }
 
-    public String getMsg() {
-        return msg;
+    public void setDate(String date) {
+        this.date = date;
     }
 }

@@ -15,6 +15,11 @@ import retrofit2.http.Part;
  */
 public interface UploadFileService {
 
+    @Multipart
+    @POST("api/upload")
+    Call<ArrayList<String>> uploadPdf(
+            @Part ArrayList<MultipartBody.Part> files
+    );
 
-    Call<PdfUploadResponse> uploadPdf(MultipartBody.Part part);
+
 }

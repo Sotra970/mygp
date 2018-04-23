@@ -45,7 +45,9 @@
     </android.support.v4.widget.NestedScrollView>
 
 
+    <!--// apply section-->
     <android.support.v7.widget.CardView
+        android:id="@+id/apply"
         android:layout_gravity="bottom"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -69,5 +71,151 @@
 
         </LinearLayout>
     </android.support.v7.widget.CardView>
+
+    <!--// waiting for response-->
+    <android.support.v7.widget.CardView
+        android:visibility="gone"
+        android:id="@+id/waiting_for_response"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:background="@color/yellow_700"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="waiting for response"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <!--// waiting list  section-->
+    <android.support.v7.widget.CardView
+        android:visibility="gone"
+        android:id="@+id/waiting_list"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:background="@color/yellow_700"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="waiting list"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <!--// Attach bank statment  section-->
+    <android.support.v7.widget.CardView
+        android:visibility="gone"
+        android:id="@+id/attach_bank_stmt"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:background="@color/blue_grey_700"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="attach your bank statement"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+
+
+    <!--// Accepted section-->
+    <android.support.v7.widget.CardView
+        android:visibility="gone"
+        android:id="@+id/accepted"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:background="@color/green_A700"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="accepted"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <!--// Rejected section-->
+    <android.support.v7.widget.CardView
+        android:visibility="gone"
+        android:id="@+id/rejected"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:background="@color/red_A700"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="rejected"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <include layout="@layout/loading"/>
+    <include layout="@layout/no_internet"/>
+
 
 </android.support.design.widget.CoordinatorLayout>
